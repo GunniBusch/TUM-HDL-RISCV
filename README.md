@@ -1,4 +1,6 @@
 # TUM-HDL-RISCV
 
 # TODO
-eta 5am
+
+## Report
+ [REPORT.md](REPORT.md)
