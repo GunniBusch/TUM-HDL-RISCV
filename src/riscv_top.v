@@ -3,7 +3,8 @@ module riscv_top (
     input wire rst,
     output wire [31:0] writedata,
     output wire [31:0] dataadr,
-    output wire memwrite
+    output wire memwrite,
+    input wire [7:0] io_input
   );
 
   wire [31:0] pc, instr, readdata;
@@ -120,13 +121,20 @@ module riscv_top (
              .rd(instr)
            );
 
+  // Data Memory Output
+  wire [31:0] mem_readdata;
+
+  // MMIO Read Logic
+  // 0xFFFFF004: UART RX (Input)
+  assign readdata = (dataadr == 32'hFFFFF004) ? {24'b0, io_input} : mem_readdata;
+
   // Data Memory
   data_mem dmem (
              .clk(clk),
              .we(memwrite),
              .a(dataadr),
              .wd(writedata),
-             .rd(readdata)
+             .rd(mem_readdata)
            );
 
 endmodule

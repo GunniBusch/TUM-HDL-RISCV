@@ -6,7 +6,7 @@ module data_mem (
     output wire [31:0] rd
   );
 
-  reg [31:0] RAM [63:0]; // Small memory for testing
+  reg [31:0] RAM [0:255];
 
   // Combinational read
   assign rd = RAM[a[31:2]];

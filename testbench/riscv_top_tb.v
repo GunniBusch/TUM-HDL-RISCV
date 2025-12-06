@@ -1,13 +1,11 @@
 
 
 
-//s
+
 
 module riscv_top_tb;
 
-  // Parameters
 
-  //Ports
   reg  clk = 0;
   reg  rst = 1;
   wire [31:0] writedata;
@@ -19,21 +17,14 @@ module riscv_top_tb;
               .rst(rst),
               .writedata(writedata),
               .dataadr(dataadr),
-              .memwrite(memwrite)
+              .memwrite(memwrite),
+              .io_input(8'h41) // Hardcoded 'A' for testing input
             );
 
 
-  // Virtual UART (MMIO @ 0xFFFFF000)
-  always @(negedge clk)
-  begin
-    if (memwrite && dataadr == 32'hFFFFF000)
-    begin
-      $write("%c", writedata[7:0]);
-    end
-  end
+
 
   always #5  clk = ! clk ;
-
 
 
 
@@ -48,11 +39,14 @@ module riscv_top_tb;
     $dumpfile("riscv_test.vcd");
     $dumpvars(0, riscv_top_tb);
 
-    // Load the hex file
     $readmemh("/Users/leonadomaitis/tum/hdl/TUM-HDL-RISCV/testbench/program.hex", dut.imem.RAM);
 
     // Run simulation
-    #500; // Increased to ensure program completes
+    #200000000; // Reduced timeout so it finishes quickly
+
+
+    $display("\n\n--------------------\n\n");
+
 
     $display("--- Final Register State ---");
     $display("x1 (10): %d", dut.rf.rf[1]);
@@ -69,11 +63,19 @@ module riscv_top_tb;
     $display("x20 (4097): %d", dut.rf.rf[20]);
     $display("------------------------");
 
-    $display("--- Memory Game State ---");
-    $display("Player pos @0x40: %d", dut.dmem.RAM[16]);
-    $display("Demon  pos @0x44: %d", dut.dmem.RAM[17]);
-    $display("-------------------------");
+
     $finish;
   end
+
+  // Debug UART (0xFFFFF000)
+  always @(negedge clk)
+  begin
+    if (memwrite && dataadr == 32'hFFFFF000)
+    begin
+      $write("%c", writedata[7:0]);
+    end
+  end
+
+
 
 endmodule

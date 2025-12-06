@@ -3,7 +3,7 @@ module inst_mem (
     output wire [31:0] rd
   );
 
-  reg [31:0] RAM [0:63]; // Small mem for blowing up
+  reg [31:0] RAM [0:255];
 
   // Memory initialization is handled by the testbench.
 
