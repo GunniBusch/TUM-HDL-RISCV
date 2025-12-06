@@ -99,13 +99,7 @@ module main_decoder (
         aluop = 2'b01;
         jump = 0;
         // Note: BEQ shares aluop 01 (Sub/Branch logic handled in alu_decoder or distinct code?)
-        // Manual says R-type is 01. We need subtraction for BEQ.
-        // Let's use aluop = 2'b01 (same as R-type? No, BEQ funct3 is 000, R-type ADD/SUB is 000.
-        // If we use 01, we need to ensure it subtracts.
-        // Using strict Table 3 for R/I. Let's use 2'b11 for others to be safe or use specific code.
-        // Resetting aluop to 2'b01 (SUB in our custom logic) -> No, Table 3 says 01 is R-type.
-        // Let's use aluop = 2'b00 for lw/sw, 01 for R, 10 for I.
-        // We can use 2'b11 for BEQ/LUI.
+
       end
       7'b1100011:
       begin // BEQ

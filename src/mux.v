@@ -1,12 +1,16 @@
-module mux2 #(
-    parameter WIDTH = 32
-  ) (
-    input wire [WIDTH-1:0] d0,
-    input wire [WIDTH-1:0] d1,
-    input wire s,
+
+module muxN #(
+    parameter WIDTH = 32,
+    parameter N = 4
+  )(
+    input wire [WIDTH*N-1:0] data,                 // flat packed input
+    input wire [$clog2(N)-1:0] s,
     output wire [WIDTH-1:0] y
   );
 
-  assign y = s ? d1 : d0;
+
+
+  assign y = data[s*WIDTH +: WIDTH];
+
 
 endmodule

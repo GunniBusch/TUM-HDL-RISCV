@@ -1,3 +1,4 @@
+
 module riscv_top (
     input wire clk,
     input wire rst,
@@ -41,9 +42,8 @@ module riscv_top (
   // Datapath
 
   // PC Logic
-  mux2 #(32) pcmux (
-         .d0(pcplus4),
-         .d1(pctarget),
+  muxN #(32,2) pcmux (
+         .data({pcplus4, pctarget}),
          .s(pcsrc),
          .y(pcnext)
        );
@@ -92,9 +92,8 @@ module riscv_top (
               );
 
   // ALU Logic
-  mux2 #(32) srcbmux (
-         .d0(writedata),
-         .d1(immext),
+  muxN #(32,2) srcbmux (
+         .data({writedata,immext}),
          .s(alusrc),
          .y(srcb)
        );
@@ -117,10 +116,8 @@ module riscv_top (
            );
 
   // Results Logic (choosing what to save basically)
-  mux3 #(32) resultmux (
-         .d0(aluout),
-         .d1(readdata),
-         .d2(pcplus4),
+  muxN #(32,3) resultmux (
+         .data({aluout, readdata, pcplus4}),
          .s(resultsrc),
          .y(result)
        );
@@ -128,28 +125,4 @@ module riscv_top (
 
 endmodule
 
-module mux3 #(
-    parameter WIDTH = 32
-  ) (
-    input wire [WIDTH-1:0] d0,
-    input wire [WIDTH-1:0] d1,
-    input wire [WIDTH-1:0] d2,
-    input wire [1:0] s,
-    output reg [WIDTH-1:0] y
-  );
 
-  always @(*)
-  begin
-    case (s)
-      2'b00:
-        y = d0;
-      2'b01:
-        y = d1;
-      2'b10:
-        y = d2;
-      default:
-        y = {WIDTH{1'bx}};
-    endcase
-  end
-
-endmodule

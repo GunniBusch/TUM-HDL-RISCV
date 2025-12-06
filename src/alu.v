@@ -10,13 +10,13 @@ module alu (
   begin
     case (alucontrol)
       4'b0000:
-        aluresult = srca + srcb; // basic addition, boring
+        aluresult = srca + srcb; // basic ADD
       4'b0001:
-        aluresult = srca - srcb; // subtraction, also boring
+        aluresult = srca - srcb; // SUB my cpu is so fast
       4'b0010:
-        aluresult = srca & srcb;
+        aluresult = srca & srcb; // AND
       4'b0011:
-        aluresult = srca | srcb;
+        aluresult = srca | srcb; // OR
       4'b0100:
         aluresult = srca ^ srcb; // spicy logic
       4'b0101:

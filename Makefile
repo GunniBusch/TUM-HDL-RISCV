@@ -7,7 +7,7 @@ GTKWAVE = surfer
 
 # Files
 SRC = src/*.v
-TB = testbench/tb_riscv_top.v
+TB = testbench/riscv_top_tb.v
 OUT = riscv_test
 VCD = riscv_test.vcd
 
@@ -17,7 +17,7 @@ VCD = riscv_test.vcd
 all: compile run
 
 compile:
-	$(IVERILOG) -o $(OUT) $(TB) $(SRC)
+	$(IVERILOG) -I src -o $(OUT) $(TB) $(SRC)
 
 run: compile
 	$(VVP) $(OUT)
