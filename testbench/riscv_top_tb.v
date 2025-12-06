@@ -22,6 +22,16 @@ module riscv_top_tb;
               .memwrite(memwrite)
             );
 
+
+  // Virtual UART (MMIO @ 0xFFFFF000)
+  always @(negedge clk)
+  begin
+    if (memwrite && dataadr == 32'hFFFFF000)
+    begin
+      $write("%c", writedata[7:0]);
+    end
+  end
+
   always #5  clk = ! clk ;
 
 
@@ -59,6 +69,11 @@ module riscv_top_tb;
     $display("x20 (4097): %d", dut.rf.rf[20]);
     $display("------------------------");
 
+    $display("--- Memory Game State ---");
+    $display("Player pos @0x40: %d", dut.dmem.RAM[16]);
+    $display("Demon  pos @0x44: %d", dut.dmem.RAM[17]);
+    $display("-------------------------");
     $finish;
   end
+
 endmodule

@@ -29,7 +29,7 @@ module controller (
                );
 
   alu_decoder ad (
-                .opb5(op[5]),
+                .opb5(op[2]),
                 .funct3(funct3),
                 .funct7b5(funct7b5),
                 .aluop(aluop),

@@ -1,2 +1,4 @@
 *.out
 *.vcd
+
+riscv_test
