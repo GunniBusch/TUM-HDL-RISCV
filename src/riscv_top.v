@@ -1,4 +1,3 @@
-
 module riscv_top (
     input wire clk,
     input wire rst,
@@ -8,23 +7,22 @@ module riscv_top (
   );
 
   wire [31:0] pc, instr, readdata;
-
-  // Instantiate Processor (Controller + Datapath)
-  // For simplicity in this single-cycle design, we can keep everything in riscv_top or separate.
-  // I will instantiate the memories here and the rest in a "riscv" module or just put everything here.
-  // Given the lab manual structure, I'll put the datapath and controller here.
-
   wire [31:0] pcnext, pcplus4, pctarget;
   wire [31:0] immext;
   wire [31:0] srca, srcb;
-  wire [31:0] aluout; // dataadr
   wire [31:0] result;
-  wire zero, pcsrc, alusrc, regwrite, jump;
+  wire [31:0] aluout; // Internal ALU result before output assign
+
+  // Control Signals
   wire [1:0] resultsrc;
+  wire pcsrc, alusrc, regwrite, zero;
   wire [2:0] immsrc;
   wire [3:0] alucontrol;
 
-  // Controller
+  // DIY bullshit
+
+
+  // Becuase me inventing a complicated way
   controller c (
                .op(instr[6:0]),
                .funct3(instr[14:12]),
@@ -39,11 +37,11 @@ module riscv_top (
                .alucontrol(alucontrol)
              );
 
-  // Datapath
 
-  // PC Logic
+
+  // PC Logic because idk
   muxN #(32,2) pcmux (
-         .data({pcplus4, pctarget}),
+         .data({pctarget, pcplus4}),
          .s(pcsrc),
          .y(pcnext)
        );
@@ -67,13 +65,8 @@ module riscv_top (
           .y(pctarget)
         );
 
-  // Instruction Memory
-  inst_mem imem (
-             .a(pc),
-             .rd(instr)
-           );
 
-  // Register File Logic
+
   reg_file rf (
              .clk(clk),
              .we3(regwrite),
@@ -91,9 +84,10 @@ module riscv_top (
                 .immext(immext)
               );
 
-  // ALU Logic
+
+
   muxN #(32,2) srcbmux (
-         .data({writedata,immext}),
+         .data({immext, writedata}),
          .s(alusrc),
          .y(srcb)
        );
@@ -106,23 +100,33 @@ module riscv_top (
         .zero(zero)
       );
 
+  // Map internal/external signals
+  assign dataadr = aluout;
+
+
+
+  muxN #(32,3) resultmux (
+         .data({pcplus4, readdata, aluout}),
+         .s(resultsrc),
+         .y(result)
+       );
+
+
+
+
+  // Instruction Memory
+  inst_mem imem (
+             .a(pc),
+             .rd(instr)
+           );
+
   // Data Memory
   data_mem dmem (
              .clk(clk),
              .we(memwrite),
-             .a(aluout),
+             .a(dataadr),
              .wd(writedata),
              .rd(readdata)
            );
 
-  // Results Logic (choosing what to save basically)
-  muxN #(32,3) resultmux (
-         .data({aluout, readdata, pcplus4}),
-         .s(resultsrc),
-         .y(result)
-       );
-  assign dataadr = aluout;
-
 endmodule
-
-

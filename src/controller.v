@@ -88,19 +88,7 @@ module main_decoder (
         aluop = 2'b01;
         jump = 0;
       end
-      7'b1100011:
-      begin // branch me maybe (BEQ)
-        regwrite = 0;
-        immsrc = 3'b010;
-        alusrc = 0;
-        memwrite = 0;
-        resultsrc = 2'bxx;
-        branch = 1;
-        aluop = 2'b01;
-        jump = 0;
-        // Note: BEQ shares aluop 01 (Sub/Branch logic handled in alu_decoder or distinct code?)
 
-      end
       7'b1100011:
       begin // BEQ
         regwrite = 0;
