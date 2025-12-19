@@ -6,7 +6,7 @@ VVP = vvp
 GTKWAVE = surfer
 
 # Files
-SRC = src/*.v
+SRC = src/rv_mc.v src/mem.v src/controller.v src/fsm.v src/alu_decoder.v src/instr_decoder.v src/alu.v src/reg_file.v src/sign_extend.v src/mux.v
 TB = testbench/rv_mc_tb.v
 OUT = rv_mc_test
 VCD = rv_mc_test.vcd
