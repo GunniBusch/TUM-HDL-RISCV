@@ -2,3 +2,5 @@
 *.vcd
 
 riscv_test
+.venv
+.DS_Store

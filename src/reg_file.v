@@ -12,10 +12,7 @@ module reg_file (
   reg [31:0] rf [31:0];
 
   // Initialize register 0 to 0
-  initial
-  begin
-    rf[0] = 32'b0;
-  end
+
 
   // Asynchronous read
   assign rd1 = (a1 != 0) ? rf[a1] : 32'b0;

@@ -7,9 +7,9 @@ GTKWAVE = surfer
 
 # Files
 SRC = src/*.v
-TB = testbench/riscv_top_tb.v
-OUT = riscv_test
-VCD = riscv_test.vcd
+TB = testbench/rv_mc_tb.v
+OUT = rv_mc_test
+VCD = rv_mc_test.vcd
 
 # Targets
 .PHONY: all compile run wave clean
