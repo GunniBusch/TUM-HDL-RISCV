@@ -3,149 +3,141 @@ project_disk_path: ''
 project_type: genericProject
 toplevel: testbench/rv_mc_tb.v
 files:
-  - name: src/adder.v
+  - name: src/sign_extend.v
     file_type: verilogSource
-    file_version: '2000'
     is_include_file: false
     include_path: ''
     logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/alu.v
-    file_type: verilogSource
+    is_manual: false
     file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/alu_decoder.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/controller.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/controller_fsm.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/data_mem.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/fsm.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/inst_mem.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/instr_decoder.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/mem.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/mux.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/pc.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
     source_type: none
   - name: src/reg_file.v
     file_type: verilogSource
-    file_version: '2000'
     is_include_file: false
     include_path: ''
     logical_name: ''
-    is_manual: true
+    is_manual: false
+    file_version: '2000'
     source_type: none
-  - name: src/riscv_top.v
+  - name: src/pc.v
     file_type: verilogSource
-    file_version: '2000'
     is_include_file: false
     include_path: ''
     logical_name: ''
-    is_manual: true
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/mux.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/mem.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/instr_decoder.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/inst_mem.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/fsm.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/data_mem.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/alu_decoder.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/controller.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/alu.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
     source_type: none
   - name: src/rv_mc.v
     file_type: verilogSource
-    file_version: '2000'
     is_include_file: false
     include_path: ''
     logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: src/sign_extend.v
-    file_type: verilogSource
+    is_manual: false
     file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
-    source_type: none
-  - name: testbench/riscv_top_tb.v
-    file_type: verilogSource
-    file_version: '2000'
-    is_include_file: false
-    include_path: ''
-    logical_name: ''
-    is_manual: true
     source_type: none
   - name: testbench/rv_mc_tb.v
     file_type: verilogSource
-    file_version: '2000'
     is_include_file: false
     include_path: ''
     logical_name: ''
-    is_manual: true
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/adder.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: src/riscv_top.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
+    source_type: none
+  - name: testbench/riscv_top_tb.v
+    file_type: verilogSource
+    is_include_file: false
+    include_path: ''
+    logical_name: ''
+    is_manual: false
+    file_version: '2000'
     source_type: none
 hooks:
   pre_build: []
@@ -417,6 +409,7 @@ configuration:
       vhdl_version: VHDL_1993
       verilog_version: V_2001
       sv_version: SV_2012
+      div_0: SV_2012
       optimization: none
       effort: high
       fsm_encoding: onehot
@@ -425,6 +418,7 @@ configuration:
       dsp_limit: 154
       block_ram_limit: 154
       fast_synthesis: false
+      div_1: false
       top_level: ''
       sim_source_list: []
       simulate_rtl: false

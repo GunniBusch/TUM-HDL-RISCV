@@ -3,15 +3,11 @@ module rv_mc (
     input wire rst
   );
 
-  // -- Internal Signals & Registers --
 
-  // Non-Architectural Registers (Pipeline registers)
   reg [31:0] instr_reg;        // IR
   reg [31:0] data_reg;         // MDR
   reg [31:0] rd1_reg, rd2_reg; // A, B
   reg [31:0] alu_reg;          // ALUOut/ALU_Reg
-
-  // Architectural Registers
   reg [31:0] pc_reg;
   reg [31:0] pc_old_reg; // Saved PC for Branch/Jump
 
@@ -34,9 +30,8 @@ module rv_mc (
   wire [31:0] alu_result;
   wire [31:0] result;
 
-  // -- Component Instantiation --
 
-  // 1. Unified Memory
+  // Unified Memory
   assign mem_adr = (sel_mem_addr) ? alu_reg : pc_reg;
 
   mem MEM (
@@ -47,7 +42,7 @@ module rv_mc (
         .rd(mem_rd)
       );
 
-  // 2. Instruction Register (IR) & PC_Old
+  // Instruction Register (IR) & PC_Old
   always @(posedge clk)
   begin
     if (we_ir)
@@ -57,13 +52,13 @@ module rv_mc (
     end
   end
 
-  // 3. Memory Data Register (MDR)
+  // Memory Data Register (MDR)
   always @(posedge clk)
   begin
     data_reg <= mem_rd;
   end
 
-  // 4. Register File & Sign Extension
+  // Register File & Sign Extension
   reg_file rf (
              .clk(clk),
              .we3(we_rf),
@@ -81,14 +76,14 @@ module rv_mc (
                 .immext(imm_ext)
               );
 
-  // 5. Operand Registers (RD1, RD2)
+  // Operand Registers (RD1, RD2)
   always @(posedge clk)
   begin
     rd1_reg <= rd1;
     rd2_reg <= rd2;
   end
 
-  // 6. ALU & Muxes
+  // ALU & Muxes
   // SrcA Mux: 00=PC, 01=PC_Old, 10=RD1
   muxN #(32, 4) mux_src_a (
          .data({32'b0, rd1_reg, pc_old_reg, pc_reg}), // {11, 10, 01, 00}
@@ -110,14 +105,14 @@ module rv_mc (
         .zero(zero)
       );
 
-  // 7. ALU Register (alu_reg) with Enable
+  // ALU Register (alu_reg) with Enable
   always @(posedge clk)
   begin
     if (we_alu)
       alu_reg <= alu_result;
   end
 
-  // 8. Result Mux & PC
+  // Result Mux & PC
   // 00: alu_reg (PC+4 from S0 or Result)
   // 01: data_reg (Load)
   // 10: alu_result (Direct PC update)
@@ -138,7 +133,6 @@ module rv_mc (
 
 
 
-  // -- Controller Instantiation --
   controller c (
                .clk(clk),
                .rst(rst),
@@ -151,7 +145,7 @@ module rv_mc (
                .we_ir(we_ir),
                .we_rf(we_rf),
                .we_mem(we_mem),
-               .we_alu(we_alu), // New signal
+               .we_alu(we_alu),
                .sel_result(sel_result),
                .sel_alu_src_a(sel_alu_src_a),
                .sel_alu_src_b(sel_alu_src_b),

@@ -7,7 +7,7 @@ module mem (
   );
 
   parameter MEM_DEPTH = 256;
-  reg [31:0] RAM [0 : MEM_DEPTH-1]; // Keep this name: RAM
+  reg [31:0] RAM [0 : MEM_DEPTH-1]; // keep this name: RAM
 
   // Check: NO initial block here!
 

@@ -41,7 +41,7 @@ module fsm (
   reg [3:0] current_state, next_state;
 
   // State Register
-  always @(posedge clk)
+  always @(posedge clk or posedge rst)
   begin
     if (rst)
       current_state <= S0_FETCH;
@@ -95,7 +95,12 @@ module fsm (
         next_state = S0_FETCH;
 
       S8_BEQ:
-        next_state = S13_BEQ_TGT;
+      begin
+        if (zero)
+          next_state = S13_BEQ_TGT;
+        else
+          next_state = S0_FETCH;
+      end
       S13_BEQ_TGT:
         next_state = S0_FETCH;
 
@@ -114,7 +119,7 @@ module fsm (
     endcase
   end
 
-  // Output Logic (Moore)
+  // Output Logic (State-Based)
   always @(*)
   begin
     // Defaults
@@ -183,23 +188,21 @@ module fsm (
 
       S8_BEQ:
       begin
-        // Calc Target -> Capture to ALU_Reg
-        we_alu = 1;
-        sel_alu_src_a = 2'b01; // PC_OLD
-        sel_alu_src_b = 2'b01; // Imm
-        alu_op = 2'b00; // ADD
+        // Compare A-B
+        sel_alu_src_a = 2'b10; // RD1
+        sel_alu_src_b = 2'b00; // RD2
+        alu_op = 2'b01;        // SUB
+        // No write. Zero flag used in Next State logic.
       end
       S13_BEQ_TGT:
       begin
-        // Compare A-B
-        sel_alu_src_a = 2'b10; // A
-        sel_alu_src_b = 2'b00; // B
-        alu_op = 2'b01; // SUB
-        if (zero)
-        begin
-          sel_result = 2'b00; // ALU_Reg (Target)
-          we_pc = 1;
-        end
+        // Calc Target: PC_Old + Imm
+        sel_alu_src_a = 2'b01; // PC_OLD
+        sel_alu_src_b = 2'b01; // Imm
+        alu_op = 2'b00;        // ADD
+
+        sel_result = 2'b10;    // Direct
+        we_pc = 1;             // Update PC
       end
 
       S10_JAL:
@@ -224,7 +227,7 @@ module fsm (
         we_alu = 1; // ENABLE WRITE
         sel_alu_src_a = 2'b10; // A
         sel_alu_src_b = 2'b01; // Imm
-        alu_op = 2'b10;        // Op dependent
+        alu_op = 2'b11;        // I-Type (Distinct from R-Type)
       end
 
       S11_LUI:

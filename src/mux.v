@@ -1,4 +1,3 @@
-
 module muxN #(
     parameter WIDTH = 32,
     parameter N = 4
