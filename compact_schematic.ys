@@ -2,7 +2,14 @@ read_verilog src/*.v
 hierarchy -check -top rv_pl
 proc
 
-# Preserve important high-level modules to maintain readability
+# Preserve ONLY major high-level modules for maximum compactness
+# Grouping:
+# - Controller (Decision making)
+# - ALU (Calculation)
+# - RegFile (State)
+# - Memories (Storage)
+# - HazardUnit (Pipeline Control)
+
 select -module controller
 setattr -mod -set keep_hierarchy 1
 select -clear
@@ -27,22 +34,16 @@ select -module data_mem
 setattr -mod -set keep_hierarchy 1
 select -clear
 
-select -module sign_extend
-setattr -mod -set keep_hierarchy 1
-select -clear
+# REMOVED: sign_extend (just wires/concatenation)
+# REMOVED: alu_decoder (small combinatorial logic, best inside controller or loose)
 
-select -module alu_decoder
-setattr -mod -set keep_hierarchy 1
-select -clear
-
-# Flatten the design
-# This will dissolve modules NOT marked with keep_hierarchy (muxN, adder, etc.)
-# into the top level, converting them to standard cells ($mux, $add)
-# which netlistsvg renders as compact symbols.
+# Flatten everything else
 flatten
 
-# Clean up any unused logic
-opt_clean
+# Aggressive optimization to remove buffers, inverters, and constant wires
+# This significantly reduces the edge count in the graph
+opt -full
+opt_clean -purge
 
 # Write the compact JSON
 write_json rv_pl_compact.json
