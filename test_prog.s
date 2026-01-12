@@ -1,6 +1,3 @@
-# RISC-V Test Program: Full Requirement Check
-# Tests: ADDI, ADD, SUB, AND, OR, XOR, SLT, SLTU, SLL, SRL, SRA, LUI, LW, SW, BEQ, JAL
-
     # 1. Basic Arithmetic & Logic
     addi x1, x0, 10     # x1 = 10
     addi x2, x0, 20     # x2 = 20
@@ -17,11 +14,11 @@
     sltu x11, x8, x9    # x11 = 0 (Large unsigned vs 5)
 
     # I-Type Logic & Sets
-    andi x24, x5, 0x01  # x24 = 0 (0 & 1)
-    ori x25, x5, 0x01   # x25 = 1 (0 | 1)
-    xori x26, x25, 0x03 # x26 = 2 (1 ^ 3)
-    slti x27, x8, -1    # x27 = 1 (-5 < -1)
-    sltiu x28, x8, 5    # x28 = 0 (Large unsigned vs 5)
+    andi x24, x5, 1      # x24 = 0 (0 & 1)
+    ori x25, x5, 1       # x25 = 1 (0 | 1)
+    xori x26, x25, 3     # x26 = 2 (1 ^ 3)
+    slti x27, x8, -1     # x27 = 1 (-5 < -1)
+    sltiu x28, x8, 5     # x28 = 0 (Large unsigned vs 5)
 
     # 3. Shifts
     addi x12, x0, 1     # x12 = 1
@@ -32,12 +29,12 @@
     addi x29, x0, 1     # Shift amount = 1
     sll x30, x12, x29   # x30 = 2 (1 << 1)
     srl x31, x13, x29   # x31 = 8 (16 >> 1)
-    sra x1, x15, x29    # x1 = -8 (-16 >>> 1)
     
     # SRA check
     addi x15, x0, -16   # x15 = -16 (0xFF...F0)
     srai x16, x15, 2    # x16 = -4  (0xFF...FC) - Arithmetic shift preserves sign
     srli x17, x15, 2    # x17 = Large positive number (Logical shift fills 0)
+    sra x1, x15, x29    # x1 = -8 (-16 >>> 1). Overwrites x1 (was 10)
 
     # 4. LUI
     lui x18, 1          # x18 = 0x00001000 (4096)
@@ -45,15 +42,15 @@
 
     # 5. Memory
     sw x19, 0(x0)       # Mem[0] = 4097
-    lw x20, 0(x0)       # x20 = 4097
+    lw x20, 0(x0)       # x20 = 4097 (Forwarding or Stall check depending on slot)
 
     # 6. Control Flow
     beq x19, x20, match # Branch if 4097 == 4097
-    addi x21, x0, 0x0AD # Should verify skip (0xBAD is too large for 12-bit imm)
+    addi x21, x0, 173   # 0xAD = 173. Should verify skip.
     
 match:
-    jal x22, end        # Jump to end
-    addi x23, x0, 0x0AD
+    jal x22, end        # Jump to end. x22 = PC+4
+    addi x23, x0, 173
 
 end:
     beq x0, x0, end     # Infinite loop

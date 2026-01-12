@@ -1,0 +1,16 @@
+read_verilog src/rv_pl.v src/controller.v src/alu.v src/reg_file.v src/adder.v src/sign_extend.v src/mux.v src/inst_mem.v src/data_mem.v src/hazard_unit.v src/alu_decoder.v src/instr_decoder.v
+hierarchy -top rv_pl
+
+# Convert processes to netlist elements (required for JSON backend)
+proc
+
+# Rename the ugly parameter modules to friendly names
+# Removed -iface flag which caused errors
+rename $paramod$f3de3e8c03c71e8912fe4ea124b6c71cac65a9bb\muxN mux3
+rename $paramod$7cd44dddc23fa5054ccad597e7123d6a617962af\muxN mux2
+
+# Write JSON for netlistsvg
+write_json rv_pl.json
+
+# Generate the graph (optional, but requested previously)
+show -format dot -prefix rv_pl_schematic

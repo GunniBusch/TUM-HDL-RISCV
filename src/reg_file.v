@@ -15,8 +15,13 @@ module reg_file (
 
 
   // Asynchronous read
-  assign rd1 = (a1 != 0) ? rf[a1] : 32'b0;
-  assign rd2 = (a2 != 0) ? rf[a2] : 32'b0;
+  // Write-through forwarding (Bypass)
+  // If reading the same register being written in the same cycle, returns the new data
+  assign rd1 = (a1 == 0) ? 32'b0 :
+         ((a3 == a1) && we3) ? wd3 : rf[a1];
+
+  assign rd2 = (a2 == 0) ? 32'b0 :
+         ((a3 == a2) && we3) ? wd3 : rf[a2];
 
   // Synchronous write
   always @(posedge clk)

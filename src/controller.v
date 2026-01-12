@@ -39,7 +39,7 @@ module controller (
       7'b1100011:
         controls = 12'b0_010_0_0_00_1_01_0; // BEQ
       7'b0010011:
-        controls = 12'b1_000_1_0_00_0_10_0; // I-type ALU
+        controls = 12'b1_000_1_0_00_0_11_0; // I-type ALU
       7'b1101111:
         controls = 12'b1_011_x_0_10_0_xx_1; // JAL
       7'b0110111:

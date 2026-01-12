@@ -1,0 +1,48 @@
+read_verilog src/*.v
+hierarchy -check -top rv_pl
+proc
+
+# Preserve important high-level modules to maintain readability
+select -module controller
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+select -module alu
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+select -module reg_file
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+select -module hazard_unit
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+select -module inst_mem
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+select -module data_mem
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+select -module sign_extend
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+select -module alu_decoder
+setattr -mod -set keep_hierarchy 1
+select -clear
+
+# Flatten the design
+# This will dissolve modules NOT marked with keep_hierarchy (muxN, adder, etc.)
+# into the top level, converting them to standard cells ($mux, $add)
+# which netlistsvg renders as compact symbols.
+flatten
+
+# Clean up any unused logic
+opt_clean
+
+# Write the compact JSON
+write_json rv_pl_compact.json

@@ -34,6 +34,9 @@ module alu (
       default:
         aluresult = 32'bx; // garbage in, garbage out
     endcase
+    // Debug Print
+    if (alucontrol !== 4'b0000 && alucontrol !== 4'bxxxx) // Filter noise (ADD is common)
+      $display("Time: %0t | ALU Control: %b | A: %h | B: %h | Res: %h", $time, alucontrol, srca, srcb, aluresult);
   end
 
   assign zero = (aluresult == 32'b0);

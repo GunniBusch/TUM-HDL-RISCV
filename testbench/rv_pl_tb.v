@@ -40,9 +40,28 @@ module rv_pl_tb;
     $display("x7 (30): %d", dut.RF.rf[7]);
     $display("x8 (-5): %d", $signed(dut.RF.rf[8]));
     $display("x9 (5):  %d", dut.RF.rf[9]);
+    $display("x10 (1): %d", dut.RF.rf[10]);
+    $display("x11 (0): %d", dut.RF.rf[11]);
+    $display("x12 (1): %d", dut.RF.rf[12]);
+    $display("x13 (16): %d", dut.RF.rf[13]);
+    $display("x14 (4): %d", dut.RF.rf[14]);
+    // x15 was overwritten/used for SRA
+    $display("x16 (-4): %d", $signed(dut.RF.rf[16]));
+    $display("x17 (>0): %d", dut.RF.rf[17]);
     $display("x18 (4096): %d", dut.RF.rf[18]);
     $display("x19 (4097): %d", dut.RF.rf[19]);
     $display("x20 (4097): %d", dut.RF.rf[20]);
+    // Logic/Set check
+    $display("x24 (0): %d", dut.RF.rf[24]);
+    $display("x25 (1): %d", dut.RF.rf[25]);
+    $display("x26 (2): %d", dut.RF.rf[26]);
+    $display("x27 (1): %d", dut.RF.rf[27]);
+    $display("x28 (0): %d", dut.RF.rf[28]);
+    // Reg Shifts
+    $display("x30 (2): %d", dut.RF.rf[30]);
+    $display("x31 (8): %d", dut.RF.rf[31]);
+    $display("x21 (0): %d", dut.RF.rf[21]); // Should be 0 (skipped)
+    $display("x23 (173): %d", dut.RF.rf[23]); // Should be 173 (executed after jump)
     $display("------------------------");
 
     $finish;
