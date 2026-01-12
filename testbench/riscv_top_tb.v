@@ -42,7 +42,7 @@ module riscv_top_tb;
     $readmemh("/Users/leonadomaitis/tum/hdl/TUM-HDL-RISCV/testbench/program.hex", dut.imem.RAM);
 
     // Run simulation
-    #200000000; // Reduced timeout so it finishes quickly
+    #5000; // Reduced timeout so it finishes quickly
 
 
     $display("\n\n--------------------\n\n");

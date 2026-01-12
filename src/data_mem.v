@@ -1,4 +1,6 @@
-module data_mem (
+module data_mem #(
+    parameter MEM_DEPTH = 256
+  ) (
     input wire clk,
     input wire we,
     input wire [31:0] a,
@@ -6,7 +8,7 @@ module data_mem (
     output wire [31:0] rd
   );
 
-  reg [31:0] RAM [0:255];
+  reg [31:0] RAM [0 : MEM_DEPTH-1]; // Verified array name is RAM
 
   // Combinational read
   assign rd = RAM[a[31:2]];

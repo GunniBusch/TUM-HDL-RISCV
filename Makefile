@@ -1,4 +1,4 @@
-# Makefile for RISC-V Processor
+# Makefile for RISC-V Pipeline Processor
 
 # Tools
 IVERILOG = iverilog
@@ -6,10 +6,22 @@ VVP = vvp
 GTKWAVE = surfer
 
 # Files
-SRC = src/rv_mc.v src/mem.v src/controller.v src/fsm.v src/alu_decoder.v src/instr_decoder.v src/alu.v src/reg_file.v src/sign_extend.v src/mux.v
-TB = testbench/rv_mc_tb.v
-OUT = rv_mc_test
-VCD = rv_mc_test.vcd
+# Pipeline Implementation
+SRC = src/rv_pl.v \
+      src/controller.v \
+      src/alu.v \
+      src/reg_file.v \
+      src/adder.v \
+      src/sign_extend.v \
+      src/mux.v \
+      src/inst_mem.v \
+      src/data_mem.v \
+      src/hazard_unit.v \
+      src/alu_decoder.v
+
+TB = testbench/rv_pl_tb.v
+OUT = rv_pl_test
+VCD = rv_pl_test.vcd
 
 # Targets
 .PHONY: all compile run wave clean

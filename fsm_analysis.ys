@@ -1,0 +1,13 @@
+read_verilog -sv src/rv_mc.v src/fsm.v src/controller.v src/alu_decoder.v \
+                 src/instr_decoder.v src/alu.v src/reg_file.v src/sign_extend.v \
+                 src/mux.v src/mem.v
+
+hierarchy -top rv_mc
+proc
+opt
+
+fsm_detect
+fsm_extract
+fsm_opt
+
+fsm_export -dot fsm.dot
